@@ -116,26 +116,19 @@ function Globe({ phase }: { phase: number }) {
         {/* Connection lines between cities */}
         {phase >= 2 && cityPoints.slice(0, 5).map((point, i) => {
           const nextPoint = cityPoints[(i + 1) % 5];
-          const curve = new THREE.QuadraticBezierCurve3(
-            point,
-            new THREE.Vector3(
-              (point.x + nextPoint.x) / 2,
-              (point.y + nextPoint.y) / 2 + 1,
-              (point.z + nextPoint.z) / 2
-            ),
-            nextPoint
+          const midPoint = new THREE.Vector3(
+            (point.x + nextPoint.x) / 2,
+            (point.y + nextPoint.y) / 2 + 1,
+            (point.z + nextPoint.z) / 2
           );
-          const curvePoints = curve.getPoints(20);
-          const geometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
           
           return (
-            <line key={i} geometry={geometry}>
-              <lineBasicMaterial 
-                color="#00d4ff" 
-                transparent 
-                opacity={0.5} 
-              />
-            </line>
+            <group key={i}>
+              <mesh position={[midPoint.x, midPoint.y, midPoint.z]}>
+                <sphereGeometry args={[0.05, 8, 8]} />
+                <meshBasicMaterial color="#00d4ff" transparent opacity={0.5} />
+              </mesh>
+            </group>
           );
         })}
 
