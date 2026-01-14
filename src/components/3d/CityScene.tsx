@@ -165,7 +165,6 @@ function ScanGrid({ active }: { active: boolean }) {
   useFrame((state) => {
     if (gridRef.current && active) {
       gridRef.current.position.y = (Math.sin(state.clock.elapsedTime * 2) + 1) * 5;
-      gridRef.current.material.opacity = 0.3 + Math.sin(state.clock.elapsedTime * 4) * 0.2;
     }
   });
 
@@ -258,14 +257,7 @@ function CityContent({ phase }: { phase: number }) {
 
       {/* Environment */}
       {phase < 3 && (
-        <Cloud 
-          opacity={0.5} 
-          speed={0.4} 
-          width={20} 
-          depth={1.5} 
-          segments={20}
-          color="#553322"
-        />
+        <fog attach="fog" args={['#553322', 10, 50]} />
       )}
       
       <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
