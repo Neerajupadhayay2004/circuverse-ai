@@ -1,6 +1,6 @@
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Play, ChevronDown } from 'lucide-react';
+import { Sparkles, Play, ChevronDown, Volume2, VolumeX, Globe } from 'lucide-react';
 import Header from '@/components/Header';
 import PhaseIndicator from '@/components/PhaseIndicator';
 import AIAnalysisPanel from '@/components/AIAnalysisPanel';
@@ -9,7 +9,9 @@ import SmartCityShowcase from '@/components/SmartCityShowcase';
 import ImpactMetrics from '@/components/ImpactMetrics';
 import TechStack from '@/components/TechStack';
 import Footer from '@/components/Footer';
+import ChatInterface, { ChatToggleButton } from '@/components/ChatInterface';
 import { useGeminiAnalysis } from '@/hooks/useGeminiAnalysis';
+import { useSoundEffects } from '@/hooks/useSoundEffects';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -17,6 +19,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { lazy } from 'react';
 const CityScene = lazy(() => import('@/components/3d/CityScene'));
 const TransformAnimation = lazy(() => import('@/components/3d/TransformAnimation'));
+const GlobalVisualization = lazy(() => import('@/components/3d/GlobalVisualization'));
 
 function Loading3D() {
   return (
@@ -37,40 +40,116 @@ export default function Index() {
   const [currentPhase, setCurrentPhase] = useState(0);
   const [wasteInput, setWasteInput] = useState('City plastic waste problem - transform into sustainable urban infrastructure');
   const [isRunning, setIsRunning] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  const [showGlobe, setShowGlobe] = useState(false);
   const { analyzeWaste, analysis, isAnalyzing } = useGeminiAnalysis();
+  const sound = useSoundEffects();
+
+  // Play ambient sound on mount
+  useEffect(() => {
+    if (sound.isEnabled) {
+      sound.playAmbient();
+    }
+    return () => sound.stopAmbient();
+  }, []);
 
   const handleVisualize = async () => {
     if (!wasteInput.trim()) return;
     
     setIsRunning(true);
     setCurrentPhase(0);
+    sound.playClick();
     
     // Start the transformation sequence
     await new Promise(resolve => setTimeout(resolve, 1500));
     setCurrentPhase(1); // AI Scan
+    sound.playTransition();
     
     // Run AI analysis
     await analyzeWaste(wasteInput);
     
     setCurrentPhase(2); // Transform
+    sound.playTransition();
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     setCurrentPhase(3); // Build
+    sound.playTransition();
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     setCurrentPhase(4); // Sustainable
+    sound.playSuccess();
     setIsRunning(false);
   };
 
   const handlePhaseClick = (phase: number) => {
     if (!isRunning) {
       setCurrentPhase(phase);
+      sound.playClick();
     }
+  };
+
+  const toggleSound = () => {
+    sound.setEnabled(!sound.isEnabled);
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
+
+      {/* Sound Toggle - Fixed */}
+      <motion.button
+        onClick={toggleSound}
+        className="fixed top-20 right-4 z-50 w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:border-primary/50 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        {sound.isEnabled ? (
+          <Volume2 className="w-5 h-5 text-primary" />
+        ) : (
+          <VolumeX className="w-5 h-5 text-muted-foreground" />
+        )}
+      </motion.button>
+
+      {/* Globe Toggle - Fixed */}
+      <motion.button
+        onClick={() => setShowGlobe(!showGlobe)}
+        className="fixed top-20 right-16 z-50 w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:border-primary/50 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <Globe className={`w-5 h-5 ${showGlobe ? 'text-primary' : 'text-muted-foreground'}`} />
+      </motion.button>
+
+      {/* Global Visualization Modal */}
+      <AnimatePresence>
+        {showGlobe && (
+          <motion.div
+            className="fixed inset-0 z-40 bg-background/90 backdrop-blur-xl flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowGlobe(false)}
+          >
+            <motion.div
+              className="w-full max-w-4xl h-[600px] glass-panel overflow-hidden"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-4 border-b border-border/50">
+                <h3 className="font-display text-xl font-bold text-gradient-eco">Global Circular Economy Network</h3>
+                <p className="text-sm text-muted-foreground">Real-time sustainable city connections worldwide</p>
+              </div>
+              <div className="h-[calc(100%-80px)]">
+                <Suspense fallback={<Loading3D />}>
+                  <GlobalVisualization phase={currentPhase} />
+                </Suspense>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
@@ -143,7 +222,7 @@ export default function Index() {
               Interactive AI Demo
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Enter a waste scenario and watch AI transform pollution into sustainable smart city infrastructure
+              Enter a waste scenario and watch AI transform pollution into sustainable smart city infrastructure with 3D trees, solar panels & vehicles
             </p>
           </motion.div>
 
@@ -225,6 +304,31 @@ export default function Index() {
               </Suspense>
             </motion.div>
           )}
+
+          {/* Feature badges */}
+          <motion.div
+            className="mt-8 flex flex-wrap justify-center gap-3"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            {[
+              '🌳 Growing Trees',
+              '☀️ Solar Panels',
+              '🚗 Electric Vehicles',
+              '🛤️ Plastic Roads',
+              '🌍 Global Network',
+              '🔊 Sound Effects',
+              '💬 AI Chat'
+            ].map((feature) => (
+              <span
+                key={feature}
+                className="px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-sm font-medium text-foreground"
+              >
+                {feature}
+              </span>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -248,6 +352,24 @@ export default function Index() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Chat Interface */}
+      <AnimatePresence>
+        {showChat ? (
+          <ChatInterface 
+            onClose={() => setShowChat(false)}
+            soundEnabled={sound.isEnabled}
+            onToggleSound={toggleSound}
+          />
+        ) : (
+          <ChatToggleButton 
+            onClick={() => {
+              setShowChat(true);
+              sound.playClick();
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
