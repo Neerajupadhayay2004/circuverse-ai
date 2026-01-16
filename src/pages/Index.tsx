@@ -11,7 +11,8 @@ import ChatInterface, { ChatToggleButton } from '@/components/ChatInterface';
 import ProblemSolution from '@/components/ProblemSolution';
 import WasteTypeSelector from '@/components/WasteTypeSelector';
 import RealTimeMetrics from '@/components/RealTimeMetrics';
-import AIRoadmap from '@/components/AIRoadmap';
+import SolutionRoadmapEnhanced from '@/components/SolutionRoadmapEnhanced';
+import TechArchitecture from '@/components/TechArchitecture';
 import VoiceNarrationButton from '@/components/VoiceNarrationButton';
 import { useGeminiAnalysis } from '@/hooks/useGeminiAnalysis';
 import { useSoundEffects } from '@/hooks/useSoundEffects';
@@ -24,6 +25,8 @@ const TransformAnimation = lazy(() => import('@/components/3d/TransformAnimation
 const GlobalVisualization = lazy(() => import('@/components/3d/GlobalVisualization'));
 const HeroBackground = lazy(() => import('@/components/3d/HeroBackground'));
 const WasteTypeVisualization = lazy(() => import('@/components/3d/WasteTypeScenes'));
+const AdvancedTransformScene = lazy(() => import('@/components/3d/AdvancedTransformScene'));
+const ParticleField = lazy(() => import('@/components/3d/ParticleField'));
 
 function Loading3D() {
   return (
@@ -275,11 +278,26 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Transform Animation */}
+          {/* Advanced Transform Scenes */}
           {currentPhase >= 2 && (
-            <motion.div className="mt-6 glass-panel overflow-hidden" style={{ height: '250px' }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-              <Suspense fallback={<Loading3D />}><TransformAnimation phase={currentPhase} /></Suspense>
-            </motion.div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+              <motion.div className="glass-panel overflow-hidden" style={{ height: '300px' }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
+                <div className="p-3 border-b border-border/50">
+                  <h4 className="font-display text-sm font-semibold text-foreground">Particle Transformation</h4>
+                </div>
+                <div className="h-[calc(100%-45px)]">
+                  <Suspense fallback={<Loading3D />}><ParticleField phase={currentPhase} /></Suspense>
+                </div>
+              </motion.div>
+              <motion.div className="glass-panel overflow-hidden" style={{ height: '300px' }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }}>
+                <div className="p-3 border-b border-border/50">
+                  <h4 className="font-display text-sm font-semibold text-foreground">Circular DNA Engine</h4>
+                </div>
+                <div className="h-[calc(100%-45px)]">
+                  <Suspense fallback={<Loading3D />}><AdvancedTransformScene phase={currentPhase} /></Suspense>
+                </div>
+              </motion.div>
+            </div>
           )}
         </div>
       </section>
@@ -295,8 +313,11 @@ export default function Index() {
         </div>
       </section>
 
-      {/* AI Roadmap - Problem to Solution */}
-      <AIRoadmap />
+      {/* Enhanced Solution Roadmap */}
+      <SolutionRoadmapEnhanced />
+
+      {/* Technical Architecture */}
+      <TechArchitecture />
 
       {/* Smart City Showcase */}
       <SmartCityShowcase />
