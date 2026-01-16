@@ -11,8 +11,11 @@ import ChatInterface, { ChatToggleButton } from '@/components/ChatInterface';
 import ProblemSolution from '@/components/ProblemSolution';
 import WasteTypeSelector from '@/components/WasteTypeSelector';
 import RealTimeMetrics from '@/components/RealTimeMetrics';
+import AIRoadmap from '@/components/AIRoadmap';
+import VoiceNarrationButton from '@/components/VoiceNarrationButton';
 import { useGeminiAnalysis } from '@/hooks/useGeminiAnalysis';
 import { useSoundEffects } from '@/hooks/useSoundEffects';
+import { useVoiceNarration } from '@/hooks/useVoiceNarration';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -42,6 +45,7 @@ export default function Index() {
   const [demoCompleted, setDemoCompleted] = useState(false);
   const { analyzeWaste, analysis, isAnalyzing, setAnalysis } = useGeminiAnalysis();
   const sound = useSoundEffects();
+  const voice = useVoiceNarration();
 
   useEffect(() => {
     if (sound.isEnabled) sound.playAmbient();
@@ -54,27 +58,33 @@ export default function Index() {
     setDemoCompleted(false);
     setCurrentPhase(0);
     sound.playClick();
+    voice.narratePhase(0);
     
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     setCurrentPhase(1);
     sound.playTransition();
+    voice.narratePhase(1);
     
     await analyzeWaste(wasteInput);
     setCurrentPhase(2);
     sound.playTransition();
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    voice.narratePhase(2);
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
     setCurrentPhase(3);
     sound.playTransition();
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    voice.narratePhase(3);
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
     setCurrentPhase(4);
     sound.playSuccess();
+    voice.narratePhase(4);
     setIsRunning(false);
     setDemoCompleted(true);
   };
 
   const handleReset = () => {
+    voice.stop();
     setCurrentPhase(0);
     setDemoCompleted(false);
     setAnalysis(null);
@@ -93,13 +103,19 @@ export default function Index() {
       <Header />
 
       {/* Fixed Controls */}
-      <div className="fixed top-20 right-4 z-50 flex gap-2">
+      <div className="fixed top-20 right-4 z-50 flex flex-col gap-2">
         <motion.button onClick={() => setShowGlobe(!showGlobe)} className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:border-primary/50 transition-colors" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
           <Globe className={`w-5 h-5 ${showGlobe ? 'text-primary' : 'text-muted-foreground'}`} />
         </motion.button>
         <motion.button onClick={toggleSound} className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:border-primary/50 transition-colors" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
           {sound.isEnabled ? <Volume2 className="w-5 h-5 text-primary" /> : <VolumeX className="w-5 h-5 text-muted-foreground" />}
         </motion.button>
+        <VoiceNarrationButton
+          enabled={voice.enabled}
+          isNarrating={voice.isNarrating}
+          onToggle={voice.toggle}
+          currentNarration={voice.currentNarration}
+        />
       </div>
 
       {/* Globe Modal */}
@@ -278,6 +294,9 @@ export default function Index() {
           <div className="max-w-lg mx-auto"><CircularFlowDiagram /></div>
         </div>
       </section>
+
+      {/* AI Roadmap - Problem to Solution */}
+      <AIRoadmap />
 
       {/* Smart City Showcase */}
       <SmartCityShowcase />
