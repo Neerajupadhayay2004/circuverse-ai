@@ -11,8 +11,8 @@ import ChatInterface, { ChatToggleButton } from '@/components/ChatInterface';
 import ProblemSolution from '@/components/ProblemSolution';
 import WasteTypeSelector from '@/components/WasteTypeSelector';
 import RealTimeMetrics from '@/components/RealTimeMetrics';
-import SolutionRoadmapEnhanced from '@/components/SolutionRoadmapEnhanced';
-import TechArchitecture from '@/components/TechArchitecture';
+import UltimateRoadmap from '@/components/UltimateRoadmap';
+import FullProcessFlow from '@/components/FullProcessFlow';
 import VoiceNarrationButton from '@/components/VoiceNarrationButton';
 import { useGeminiAnalysis } from '@/hooks/useGeminiAnalysis';
 import { useSoundEffects } from '@/hooks/useSoundEffects';
@@ -314,10 +314,10 @@ export default function Index() {
       </section>
 
       {/* Enhanced Solution Roadmap */}
-      <SolutionRoadmapEnhanced />
+      <UltimateRoadmap />
 
-      {/* Technical Architecture */}
-      <TechArchitecture />
+      {/* Full Process Flow with 3D */}
+      <FullProcessFlow />
 
       {/* Smart City Showcase */}
       <SmartCityShowcase />
