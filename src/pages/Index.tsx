@@ -27,6 +27,8 @@ const HeroBackground = lazy(() => import('@/components/3d/HeroBackground'));
 const WasteTypeVisualization = lazy(() => import('@/components/3d/WasteTypeScenes'));
 const AdvancedTransformScene = lazy(() => import('@/components/3d/AdvancedTransformScene'));
 const ParticleField = lazy(() => import('@/components/3d/ParticleField'));
+const GalaxyTransformScene = lazy(() => import('@/components/3d/GalaxyTransformScene'));
+const MorphingSphere = lazy(() => import('@/components/3d/MorphingSphere'));
 
 function Loading3D() {
   return (
@@ -278,22 +280,38 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Advanced Transform Scenes */}
-          {currentPhase >= 2 && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-              <motion.div className="glass-panel overflow-hidden" style={{ height: '300px' }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-                <div className="p-3 border-b border-border/50">
-                  <h4 className="font-display text-sm font-semibold text-foreground">Particle Transformation</h4>
+          {/* Advanced Transform Scenes - Row 1 */}
+          {currentPhase >= 1 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-6">
+              <motion.div className="glass-panel overflow-hidden" style={{ height: '280px' }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
+                <div className="p-2 sm:p-3 border-b border-border/50">
+                  <h4 className="font-display text-xs sm:text-sm font-semibold text-foreground">🌌 Galaxy Transform</h4>
                 </div>
-                <div className="h-[calc(100%-45px)]">
+                <div className="h-[calc(100%-40px)]">
+                  <Suspense fallback={<Loading3D />}><GalaxyTransformScene phase={currentPhase} /></Suspense>
+                </div>
+              </motion.div>
+              <motion.div className="glass-panel overflow-hidden" style={{ height: '280px' }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.05 }}>
+                <div className="p-2 sm:p-3 border-b border-border/50">
+                  <h4 className="font-display text-xs sm:text-sm font-semibold text-foreground">🔮 Morphing Core</h4>
+                </div>
+                <div className="h-[calc(100%-40px)]">
+                  <Suspense fallback={<Loading3D />}><MorphingSphere phase={currentPhase} /></Suspense>
+                </div>
+              </motion.div>
+              <motion.div className="glass-panel overflow-hidden" style={{ height: '280px' }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }}>
+                <div className="p-2 sm:p-3 border-b border-border/50">
+                  <h4 className="font-display text-xs sm:text-sm font-semibold text-foreground">✨ Particle Field</h4>
+                </div>
+                <div className="h-[calc(100%-40px)]">
                   <Suspense fallback={<Loading3D />}><ParticleField phase={currentPhase} /></Suspense>
                 </div>
               </motion.div>
-              <motion.div className="glass-panel overflow-hidden" style={{ height: '300px' }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }}>
-                <div className="p-3 border-b border-border/50">
-                  <h4 className="font-display text-sm font-semibold text-foreground">Circular DNA Engine</h4>
+              <motion.div className="glass-panel overflow-hidden" style={{ height: '280px' }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.15 }}>
+                <div className="p-2 sm:p-3 border-b border-border/50">
+                  <h4 className="font-display text-xs sm:text-sm font-semibold text-foreground">🧬 Circular DNA</h4>
                 </div>
-                <div className="h-[calc(100%-45px)]">
+                <div className="h-[calc(100%-40px)]">
                   <Suspense fallback={<Loading3D />}><AdvancedTransformScene phase={currentPhase} /></Suspense>
                 </div>
               </motion.div>
