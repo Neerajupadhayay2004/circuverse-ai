@@ -253,52 +253,52 @@ export default function FullProcessFlow() {
   };
 
   return (
-    <section id="process" className="py-20 bg-gradient-to-b from-background to-card/30">
-      <div className="container mx-auto px-4">
+    <section id="process" className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-card/30">
+      <div className="container mx-auto px-3 sm:px-4">
         {/* Header */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-secondary/30 mb-6">
-            <Layers className="w-4 h-4 text-secondary" />
-            <span className="text-sm text-secondary font-medium">Complete Process Flow</span>
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-panel border border-secondary/30 mb-4 sm:mb-6">
+            <Layers className="w-3 h-3 sm:w-4 sm:h-4 text-secondary" />
+            <span className="text-xs sm:text-sm text-secondary font-medium">Complete Process Flow</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-gradient-eco">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-display font-bold mb-3 sm:mb-4 text-gradient-eco">
             How CIRCUVERSE AI Works
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-2">
             End-to-end transformation pipeline from waste input to sustainable city visualization
           </p>
         </motion.div>
 
         {/* 3D Process Visualization */}
         <motion.div
-          className="mb-12 glass-panel overflow-hidden"
-          style={{ height: '300px' }}
+          className="mb-8 sm:mb-12 glass-panel overflow-hidden"
+          style={{ height: '250px' }}
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
-          <div className="p-4 border-b border-border/30 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Eye className="w-5 h-5 text-primary" />
-              <span className="font-display font-semibold text-foreground">Live Process Pipeline</span>
+          <div className="p-3 sm:p-4 border-b border-border/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+              <span className="font-display font-semibold text-foreground text-sm sm:text-base">Live Process Pipeline</span>
             </div>
             <div className="flex items-center gap-2">
               <Button
                 size="sm"
                 variant={isPlaying ? "outline" : "default"}
                 onClick={isPlaying ? () => setIsPlaying(false) : handlePlayDemo}
-                className="gap-2"
+                className="gap-1 sm:gap-2 text-xs sm:text-sm h-8"
               >
-                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                {isPlaying ? 'Pause' : 'Auto Play'}
+                {isPlaying ? <Pause className="w-3 h-3 sm:w-4 sm:h-4" /> : <Play className="w-3 h-3 sm:w-4 sm:h-4" />}
+                <span className="hidden xs:inline">{isPlaying ? 'Pause' : 'Auto Play'}</span>
               </Button>
-              <Button size="sm" variant="outline" onClick={handleReset}>
-                <RotateCcw className="w-4 h-4" />
+              <Button size="sm" variant="outline" onClick={handleReset} className="h-8 w-8 p-0">
+                <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4" />
               </Button>
             </div>
           </div>
@@ -310,13 +310,13 @@ export default function FullProcessFlow() {
         </motion.div>
 
         {/* Step Navigation */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-12">
           {processSteps.map((step, i) => {
             const Icon = step.icon;
             return (
               <motion.button
                 key={step.id}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
+                className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl transition-all text-[10px] sm:text-sm ${
                   activeStep === i 
                     ? 'bg-gradient-eco text-primary-foreground eco-glow' 
                     : activeStep > i
@@ -327,9 +327,9 @@ export default function FullProcessFlow() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Icon className="w-4 h-4" />
-                <span className="text-sm font-medium hidden md:block">{step.title}</span>
-                <span className="text-xs opacity-60">({step.duration})</span>
+                <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="font-medium hidden sm:block">{step.title}</span>
+                <span className="opacity-60 hidden md:inline">({step.duration})</span>
               </motion.button>
             );
           })}
@@ -424,23 +424,23 @@ export default function FullProcessFlow() {
 
         {/* Data Flow Summary */}
         <motion.div
-          className="mt-12 glass-panel p-6"
+          className="mt-8 sm:mt-12 glass-panel p-4 sm:p-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h3 className="font-display text-xl font-bold text-center mb-6 text-gradient-eco">
+          <h3 className="font-display text-lg sm:text-xl font-bold text-center mb-4 sm:mb-6 text-gradient-eco">
             Complete Data Flow
           </h3>
-          <div className="flex flex-wrap justify-center items-center gap-3">
-            {['User Input', 'NLP Processing', 'AI Analysis', 'Optimization', '3D Generation', 'Impact Output'].map((step, i) => (
-              <motion.div key={step} className="flex items-center gap-3">
-                <div className={`px-4 py-2 rounded-lg ${i <= activeStep ? 'bg-gradient-eco text-primary-foreground' : 'bg-muted/30 text-muted-foreground'}`}>
-                  <span className="text-sm font-medium">{step}</span>
+          <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3">
+            {['User Input', 'NLP', 'AI Analysis', 'Optimize', '3D Gen', 'Impact'].map((step, i) => (
+              <motion.div key={step} className="flex items-center gap-1 sm:gap-3">
+                <div className={`px-2 sm:px-4 py-1 sm:py-2 rounded-lg ${i <= activeStep ? 'bg-gradient-eco text-primary-foreground' : 'bg-muted/30 text-muted-foreground'}`}>
+                  <span className="text-[10px] sm:text-sm font-medium">{step}</span>
                 </div>
                 {i < 5 && (
                   <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}>
-                    <ArrowRight className="w-4 h-4 text-primary" />
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                   </motion.div>
                 )}
               </motion.div>
