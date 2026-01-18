@@ -275,27 +275,27 @@ export default function UltimateRoadmap() {
   };
 
   return (
-    <section id="roadmap" className="py-20 bg-gradient-to-b from-background via-card/10 to-background overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section id="roadmap" className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background via-card/10 to-background overflow-hidden">
+      <div className="container mx-auto px-3 sm:px-4">
         {/* Header */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
           <motion.div 
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-primary/30 mb-6"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-panel border border-primary/30 mb-4 sm:mb-6"
             animate={{ boxShadow: ['0 0 20px rgba(0,212,170,0.2)', '0 0 40px rgba(0,212,170,0.4)', '0 0 20px rgba(0,212,170,0.2)'] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <Target className="w-4 h-4 text-primary" />
-            <span className="text-sm text-primary font-medium">Complete AI Solution Roadmap</span>
+            <Target className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+            <span className="text-xs sm:text-sm text-primary font-medium">Complete AI Solution Roadmap</span>
           </motion.div>
-          <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 sm:mb-6">
             <span className="text-gradient-eco">Problem</span>
             <motion.span 
-              className="inline-block mx-4 text-foreground"
+              className="inline-block mx-2 sm:mx-4 text-foreground"
               animate={{ x: [0, 10, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
@@ -303,7 +303,7 @@ export default function UltimateRoadmap() {
             </motion.span>
             <span className="text-gradient-eco">AI Solution</span>
           </h2>
-          <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto px-2">
             Every waste management challenge has an AI-powered solution. See exactly how CIRCUVERSE transforms problems into sustainable opportunities.
           </p>
         </motion.div>
@@ -311,27 +311,27 @@ export default function UltimateRoadmap() {
         {/* 3D Process Visualization */}
         {showProcess3D && (
           <motion.div
-            className="mb-12 glass-panel overflow-hidden"
-            style={{ height: '350px' }}
+            className="mb-8 sm:mb-12 glass-panel overflow-hidden"
+            style={{ height: '280px' }}
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
           >
-            <div className="p-4 border-b border-border/30 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-eco flex items-center justify-center">
-                  <Cpu className="w-5 h-5 text-primary-foreground" />
+            <div className="p-3 sm:p-4 border-b border-border/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-eco flex items-center justify-center">
+                  <Cpu className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-foreground">3D Process Pipeline</h3>
-                  <p className="text-xs text-muted-foreground">Interactive visualization of the AI transformation flow</p>
+                  <h3 className="font-display font-bold text-foreground text-sm sm:text-base">3D Process Pipeline</h3>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground hidden sm:block">Interactive visualization of the AI transformation flow</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                 {phases.map((phase, i) => (
                   <motion.button
                     key={phase.id}
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-colors ${
+                    className={`w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-[10px] sm:text-xs font-bold transition-colors ${
                       activeStep >= i ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
                     }`}
                     onClick={() => setActiveStep(i)}
@@ -352,11 +352,11 @@ export default function UltimateRoadmap() {
         )}
 
         {/* Step Labels */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-12">
           {['Data Input', 'AI Analysis', 'Transform', '3D Generate', 'Impact'].map((label, i) => (
             <motion.button
               key={label}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all text-xs sm:text-sm ${
                 activeStep === i 
                   ? 'bg-primary text-primary-foreground eco-glow' 
                   : 'bg-muted/30 text-muted-foreground hover:bg-muted/50'
@@ -365,12 +365,12 @@ export default function UltimateRoadmap() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+              <span className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold ${
                 activeStep === i ? 'bg-primary-foreground/20' : 'bg-muted'
               }`}>
                 {i + 1}
               </span>
-              <span className="text-sm font-medium">{label}</span>
+              <span className="font-medium">{label}</span>
             </motion.button>
           ))}
         </div>
@@ -559,17 +559,17 @@ export default function UltimateRoadmap() {
 
         {/* Why It Works */}
         <motion.div
-          className="mt-16 glass-panel p-8"
+          className="mt-10 sm:mt-16 glass-panel p-4 sm:p-6 md:p-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="text-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-display font-bold text-gradient-eco mb-2">Why CIRCUVERSE AI Wins</h3>
-            <p className="text-muted-foreground">Built for impact, designed for hackathons</p>
+          <div className="text-center mb-6 sm:mb-8">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-gradient-eco mb-2">Why CIRCUVERSE AI Wins</h3>
+            <p className="text-sm sm:text-base text-muted-foreground">Built for impact, designed for hackathons</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
             {[
               { icon: Brain, title: "Pure AI", desc: "No IoT/hardware costs", color: "from-purple-500 to-pink-500" },
               { icon: Globe, title: "Web-Based", desc: "Works anywhere, any device", color: "from-cyan-500 to-blue-500" },
@@ -580,7 +580,7 @@ export default function UltimateRoadmap() {
               return (
                 <motion.div
                   key={item.title}
-                  className="text-center p-4"
+                  className="text-center p-2 sm:p-4"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -588,14 +588,14 @@ export default function UltimateRoadmap() {
                   whileHover={{ scale: 1.05 }}
                 >
                   <motion.div 
-                    className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4`}
+                    className={`w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-2 sm:mb-4`}
                     whileHover={{ rotate: [0, -5, 5, 0] }}
                     transition={{ duration: 0.5 }}
                   >
-                    <Icon className="w-8 h-8 text-white" />
+                    <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </motion.div>
-                  <h4 className="font-display font-bold text-foreground mb-1">{item.title}</h4>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  <h4 className="font-display font-bold text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">{item.title}</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">{item.desc}</p>
                 </motion.div>
               );
             })}
