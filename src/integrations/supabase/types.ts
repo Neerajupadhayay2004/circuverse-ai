@@ -14,7 +14,144 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_history: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          session_id: string
+          user_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          session_id?: string
+          user_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          session_id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      impact_metrics: {
+        Row: {
+          average_circular_score: number
+          created_at: string
+          id: string
+          total_co2_saved: number
+          total_energy_saved: number
+          total_submissions: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          average_circular_score?: number
+          created_at?: string
+          id?: string
+          total_co2_saved?: number
+          total_energy_saved?: number
+          total_submissions?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          average_circular_score?: number
+          created_at?: string
+          id?: string
+          total_co2_saved?: number
+          total_energy_saved?: number
+          total_submissions?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          location: string | null
+          organization: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          organization?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          organization?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      waste_submissions: {
+        Row: {
+          circular_score: number
+          co2_saved: number
+          created_at: string
+          energy_saved: number
+          id: string
+          products: string[] | null
+          recyclability: number
+          smart_city_applications: string[] | null
+          user_id: string | null
+          waste_input: string
+          waste_type: string
+        }
+        Insert: {
+          circular_score?: number
+          co2_saved?: number
+          created_at?: string
+          energy_saved?: number
+          id?: string
+          products?: string[] | null
+          recyclability?: number
+          smart_city_applications?: string[] | null
+          user_id?: string | null
+          waste_input: string
+          waste_type: string
+        }
+        Update: {
+          circular_score?: number
+          co2_saved?: number
+          created_at?: string
+          energy_saved?: number
+          id?: string
+          products?: string[] | null
+          recyclability?: number
+          smart_city_applications?: string[] | null
+          user_id?: string | null
+          waste_input?: string
+          waste_type?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

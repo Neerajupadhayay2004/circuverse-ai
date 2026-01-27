@@ -14,7 +14,8 @@ import RealTimeMetrics from '@/components/RealTimeMetrics';
 import UltimateRoadmap from '@/components/UltimateRoadmap';
 import FullProcessFlow from '@/components/FullProcessFlow';
 import VoiceNarrationButton from '@/components/VoiceNarrationButton';
-import { useGeminiAnalysis } from '@/hooks/useGeminiAnalysis';
+import { GlobalStatsPanel } from '@/components/GlobalStatsPanel';
+import { useWasteAnalysis } from '@/hooks/useWasteAnalysis';
 import { useSoundEffects } from '@/hooks/useSoundEffects';
 import { useVoiceNarration } from '@/hooks/useVoiceNarration';
 import { Button } from '@/components/ui/button';
@@ -48,7 +49,7 @@ export default function Index() {
   const [showChat, setShowChat] = useState(false);
   const [showGlobe, setShowGlobe] = useState(false);
   const [demoCompleted, setDemoCompleted] = useState(false);
-  const { analyzeWaste, analysis, isAnalyzing, setAnalysis } = useGeminiAnalysis();
+  const { analyzeWaste, analysis, isAnalyzing, setAnalysis } = useWasteAnalysis();
   const sound = useSoundEffects();
   const voice = useVoiceNarration();
 
@@ -336,6 +337,11 @@ export default function Index() {
 
       {/* Full Process Flow with 3D */}
       <FullProcessFlow />
+
+      {/* Global Stats Dashboard */}
+      <section id="impact">
+        <GlobalStatsPanel />
+      </section>
 
       {/* Smart City Showcase */}
       <SmartCityShowcase />
