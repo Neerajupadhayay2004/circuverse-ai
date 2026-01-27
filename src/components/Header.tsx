@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Leaf, Sparkles } from 'lucide-react';
+import { UserProfileButton } from './UserProfileButton';
 
 export default function Header() {
   return (
@@ -49,11 +50,12 @@ export default function Header() {
             </a>
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               <span className="text-xs text-primary font-medium">AI Active</span>
             </div>
+            <UserProfileButton />
           </div>
         </div>
       </div>
